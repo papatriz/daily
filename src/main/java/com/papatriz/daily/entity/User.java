@@ -1,16 +1,22 @@
 package com.papatriz.daily.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "\"user\"")
+@Builder
+@AllArgsConstructor
 public class User {
     @Id
     @Column(name = "user_id", nullable = false, length = 36)
-    private String id;
+    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    private UUID id;
 
     @Column(name = "name", nullable = false, length = 30)
     private String name;
@@ -24,11 +30,15 @@ public class User {
     @Column(name = "password", nullable = false, length = 60)
     private String password;
 
-    public String getId() {
+    public User() {
+
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

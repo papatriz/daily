@@ -11,7 +11,7 @@ public class Tasklog {
     @MapsId("actId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "act_id", nullable = false)
-    private Activity act;
+    private Activity activity;
 
     public TasklogId getId() {
         return id;
@@ -21,12 +21,12 @@ public class Tasklog {
         this.id = id;
     }
 
-    public Activity getAct() {
-        return act;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setAct(Activity act) {
-        this.act = act;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
 }
