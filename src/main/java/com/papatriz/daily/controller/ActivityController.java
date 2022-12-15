@@ -1,6 +1,6 @@
 package com.papatriz.daily.controller;
 
-import com.papatriz.daily.entity.Activity;
+import com.papatriz.daily.dto.ActivityDto;
 import com.papatriz.daily.entity.User;
 import com.papatriz.daily.service.ActivityService;
 import com.papatriz.daily.service.UserService;
@@ -19,7 +19,7 @@ public class ActivityController {
 
     private final UserService userService;
     private final ActivityService activityService;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     public ActivityController(UserService userService, ActivityService activityService) {
         this.userService = userService;
@@ -27,9 +27,9 @@ public class ActivityController {
     }
 
     @GetMapping("")
-    Set<Activity> getActivitiesForUser() {
+    Set<ActivityDto> getActivitiesForUser() {
         User testUser = userService.getTestUser().orElseThrow();
-        Set<Activity> result = activityService.getActivitiesByUser(testUser);
+        Set<ActivityDto> result = activityService.getActivitiesByUser(testUser);
         logger.info("ACTIVITY FOR USER "+testUser.getName()+" : "+result.size());
         return result;
     }

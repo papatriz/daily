@@ -1,8 +1,7 @@
 package com.papatriz.daily.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
@@ -11,6 +10,9 @@ import java.util.UUID;
 @Table(name = "\"user\"")
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class User {
     @Id
     @Column(name = "user_id", nullable = false, length = 36)
@@ -29,49 +31,5 @@ public class User {
 
     @Column(name = "password", nullable = false, length = 60)
     private String password;
-
-    public User() {
-
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 }

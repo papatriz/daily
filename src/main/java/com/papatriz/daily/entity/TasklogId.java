@@ -2,12 +2,16 @@ package com.papatriz.daily.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Setter
+@Getter
 @Embeddable
 public class TasklogId implements Serializable {
     private static final long serialVersionUID = -273243308358019484L;
@@ -16,22 +20,6 @@ public class TasklogId implements Serializable {
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
-
-    public Long getActId() {
-        return actId;
-    }
-
-    public void setActId(Long actId) {
-        this.actId = actId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     @Override
     public boolean equals(Object o) {

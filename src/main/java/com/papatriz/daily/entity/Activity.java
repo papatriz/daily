@@ -1,9 +1,13 @@
 package com.papatriz.daily.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "activity")
+@Setter
+@Getter
 public class Activity {
     @Id
     @Column(name = "id", nullable = false)
@@ -21,45 +25,5 @@ public class Activity {
 
     @Column(name = "weight", nullable = false)
     private Short weight;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Short getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Short duration) {
-        this.duration = duration;
-    }
-
-    public Short getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Short weight) {
-        this.weight = weight;
-    }
 
 }
