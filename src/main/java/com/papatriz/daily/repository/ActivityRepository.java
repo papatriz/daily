@@ -4,9 +4,9 @@ import com.papatriz.daily.entity.Activity;
 import com.papatriz.daily.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Set;
+import java.util.List;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
 
-    Set<Activity> findAllByUser(User user);
+    List<Activity> findAllByUser(User user);
 }

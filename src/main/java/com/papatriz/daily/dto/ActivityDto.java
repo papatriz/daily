@@ -1,6 +1,6 @@
 package com.papatriz.daily.dto;
 
 
-public record ActivityDto(String title, int duration, int weight) {
+public record ActivityDto(long id, String title, short duration, short weight) {
 
 }
