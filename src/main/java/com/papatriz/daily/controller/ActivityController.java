@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -36,6 +37,12 @@ public class ActivityController {
         List<ActivityDto> result = activityService.getActivitiesByUser(testUser);
         logger.info("ACTIVITY FOR USER "+testUser.getName()+" : "+result.size());
         return result;
+    }
+
+    @GetMapping("/{id}/{date}")
+    public boolean isActivityComplete(@PathVariable("id") Long id, @PathVariable("date") LocalDate date) {
+        logger.info("Activity ID: "+id+" Date: "+date);
+        return activityService.isActivityComplete(id, date);
     }
 
     @PostMapping("/add")
