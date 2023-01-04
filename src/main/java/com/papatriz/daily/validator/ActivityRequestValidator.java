@@ -20,9 +20,9 @@ public class ActivityRequestValidator {
     public List<String> validate(ActivityDto dto) {
         List<String> errors = new ArrayList<>();
 
-        if (dto.title() == null || dto.title().isBlank()) errors.add(errorMap.get("title"));
-        if (dto.duration() < 30 || dto.duration() > 600) errors.add(errorMap.get("duration"));
-        if (dto.weight() < 1 || dto.weight() > 10) errors.add(errorMap.get("weight"));
+        if (dto.getTitle() == null || dto.getTitle().isBlank()) errors.add(errorMap.get("title"));
+        if (dto.getDuration() < 30 || dto.getDuration() > 600) errors.add(errorMap.get("duration"));
+        if (dto.getWeight() < 1 || dto.getWeight() > 10) errors.add(errorMap.get("weight"));
 
         return errors;
     }

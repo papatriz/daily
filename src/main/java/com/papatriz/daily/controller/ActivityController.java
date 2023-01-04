@@ -57,32 +57,33 @@ public class ActivityController {
         Activity entity = new Activity();
 
         entity.setUser(testUser);
-        entity.setTitle(activityDto.title());
-        entity.setDuration(activityDto.duration());
-        entity.setWeight(activityDto.weight());
+        entity.setTitle(activityDto.getTitle());
+        entity.setDuration(activityDto.getDuration());
+        entity.setWeight(activityDto.getWeight());
 
         activityService.save(entity);
         return ResponseEntity.ok().body(
                 "{\"activityId\":\""+entity.getId()+"\"}");
     }
 
-    @PostMapping("/edit")
+    @PostMapping ("/edit")
     public ResponseEntity<String> editActivity(@RequestBody ActivityDto dto) {
 
+        logger.info(dto.toString());
         List<String> errors = validator.validate(dto);
         if (!errors.isEmpty()) {
             return ResponseEntity.badRequest().body(String.join("\n", errors));
         }
 
-        Optional<Activity> entityOpt = activityService.getById(dto.id());
+        Optional<Activity> entityOpt = activityService.getById(dto.getId());
 
         if (!entityOpt.isPresent())
             return ResponseEntity.notFound().build();
 
         Activity entity = entityOpt.get();
-        entity.setTitle(dto.title());
-        entity.setDuration(dto.duration());
-        entity.setWeight(dto.weight());
+        entity.setTitle(dto.getTitle());
+        entity.setDuration(dto.getDuration());
+        entity.setWeight(dto.getWeight());
 
         activityService.save(entity);
         return ResponseEntity.ok().body(
