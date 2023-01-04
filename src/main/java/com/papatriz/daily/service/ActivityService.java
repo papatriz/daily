@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,5 +40,9 @@ public class ActivityService {
 
     public boolean isActivityComplete(long id, LocalDate date) {
         return tasklogRepository.existsById(new TasklogId(id, date));
+    }
+
+    public Optional<Activity> getById(long id) {
+        return activityRepository.findById(id);
     }
 }

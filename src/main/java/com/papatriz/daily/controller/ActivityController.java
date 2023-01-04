@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/activity")
@@ -59,6 +60,29 @@ public class ActivityController {
         entity.setTitle(activityDto.title());
         entity.setDuration(activityDto.duration());
         entity.setWeight(activityDto.weight());
+
+        activityService.save(entity);
+        return ResponseEntity.ok().body(
+                "{\"activityId\":\""+entity.getId()+"\"}");
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<String> editActivity(@RequestBody ActivityDto dto) {
+
+        List<String> errors = validator.validate(dto);
+        if (!errors.isEmpty()) {
+            return ResponseEntity.badRequest().body(String.join("\n", errors));
+        }
+
+        Optional<Activity> entityOpt = activityService.getById(dto.id());
+
+        if (!entityOpt.isPresent())
+            return ResponseEntity.notFound().build();
+
+        Activity entity = entityOpt.get();
+        entity.setTitle(dto.title());
+        entity.setDuration(dto.duration());
+        entity.setWeight(dto.weight());
 
         activityService.save(entity);
         return ResponseEntity.ok().body(
