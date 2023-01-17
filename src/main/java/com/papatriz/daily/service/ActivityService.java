@@ -30,7 +30,8 @@ public class ActivityService {
                         activity.getId(),
                         activity.getTitle(),
                         activity.getDuration(),
-                        activity.getWeight()))
+                        activity.getWeight(),
+                        activity.getStartDate()))
                 .collect(Collectors.toList());
     }
 

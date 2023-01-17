@@ -60,13 +60,14 @@ public class ActivityController {
         entity.setTitle(activityDto.getTitle());
         entity.setDuration(activityDto.getDuration());
         entity.setWeight(activityDto.getWeight());
+        entity.setStartDate(LocalDate.now());
 
         activityService.save(entity);
         return ResponseEntity.ok().body(
                 "{\"activityId\":\""+entity.getId()+"\"}");
     }
 
-    @PostMapping ("/edit")
+    @PutMapping("/edit")
     public ResponseEntity<String> editActivity(@RequestBody ActivityDto dto) {
 
         logger.info(dto.toString());
