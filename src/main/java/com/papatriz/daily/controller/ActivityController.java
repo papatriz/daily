@@ -90,4 +90,9 @@ public class ActivityController {
         return ResponseEntity.ok().body(
                 "{\"activityId\":\""+entity.getId()+"\"}");
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteActivity(@PathVariable("id") Long id) {
+        activityService.deleteById(id);
+    }
 }

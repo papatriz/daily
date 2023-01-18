@@ -6,6 +6,8 @@ import com.papatriz.daily.entity.TasklogId;
 import com.papatriz.daily.entity.User;
 import com.papatriz.daily.repository.ActivityRepository;
 import com.papatriz.daily.repository.TasklogRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class ActivityService {
     private final ActivityRepository activityRepository;
     private final TasklogRepository tasklogRepository;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     public ActivityService(ActivityRepository activityRepository, TasklogRepository tasklogRepository) {
         this.activityRepository = activityRepository;
@@ -42,8 +45,15 @@ public class ActivityService {
     public boolean isActivityComplete(long id, LocalDate date) {
         return tasklogRepository.existsById(new TasklogId(id, date));
     }
-
     public Optional<Activity> getById(long id) {
         return activityRepository.findById(id);
+    }
+    public void deleteById(long id) {
+        try {
+            activityRepository.deleteById(id);
+        }
+        catch (Exception e) {
+            logger.info("Exception: "+e.getClass()+ " " + e.getMessage());
+        }
     }
 }
