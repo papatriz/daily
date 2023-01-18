@@ -49,8 +49,11 @@ public class ActivityService {
         return activityRepository.findById(id);
     }
     public void deleteById(long id) {
+        if (!activityRepository.existsById(id)) return;
         try {
+            tasklogRepository.deleteAllById_ActivityId(id);
             activityRepository.deleteById(id);
+            logger.info("Deleting activity with id "+id);
         }
         catch (Exception e) {
             logger.info("Exception: "+e.getClass()+ " " + e.getMessage());
