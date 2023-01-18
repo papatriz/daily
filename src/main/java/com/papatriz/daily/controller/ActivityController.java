@@ -2,8 +2,11 @@ package com.papatriz.daily.controller;
 
 import com.papatriz.daily.dto.ActivityDto;
 import com.papatriz.daily.entity.Activity;
+import com.papatriz.daily.entity.Tasklog;
+import com.papatriz.daily.entity.TasklogId;
 import com.papatriz.daily.entity.User;
 import com.papatriz.daily.service.ActivityService;
+import com.papatriz.daily.service.TasklogService;
 import com.papatriz.daily.validator.ActivityRequestValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,20 +24,21 @@ import java.util.Optional;
 public class ActivityController {
 
     private final ActivityService activityService;
+    private final TasklogService tasklogService;
     private final ActivityRequestValidator validator;
     @Autowired
     private User testUser;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    public ActivityController(ActivityService activityService, ActivityRequestValidator validator) {
+    public ActivityController(ActivityService activityService, TasklogService tasklogService, ActivityRequestValidator validator) {
         this.activityService = activityService;
+        this.tasklogService = tasklogService;
         this.validator = validator;
     }
 
     @GetMapping("")
     List<ActivityDto> getActivitiesForUser() {
-      //  User testUser = userService.getTestUser().orElseThrow();
         List<ActivityDto> result = activityService.getActivitiesByUser(testUser);
         logger.info("ACTIVITY FOR USER "+testUser.getName()+" : "+result.size());
         return result;
@@ -42,8 +46,24 @@ public class ActivityController {
 
     @GetMapping("/{id}/{date}")
     public boolean isActivityComplete(@PathVariable("id") Long id, @PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
-        logger.info("Activity ID: "+id+" Date: "+date);
+
         return activityService.isActivityComplete(id, date);
+    }
+
+    @PostMapping("/{id}/{date}")
+    public ResponseEntity<String> completeActivity(@PathVariable("id") Long id, @PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
+
+        var activityOpt = activityService.getById(id);
+        if (activityOpt.isEmpty()) return ResponseEntity.notFound().build();;
+
+        var taskKey = new TasklogId(id, date);
+        var task = new Tasklog();
+        task.setId(taskKey);
+        task.setActivity(activityOpt.get());
+        tasklogService.save(task);
+
+        return ResponseEntity.ok().body("complete");
+
     }
 
     @PostMapping("/add")

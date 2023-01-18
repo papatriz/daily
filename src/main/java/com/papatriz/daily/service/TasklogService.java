@@ -1,5 +1,6 @@
 package com.papatriz.daily.service;
 
+import com.papatriz.daily.entity.Tasklog;
 import com.papatriz.daily.repository.TasklogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,9 @@ public class TasklogService {
 
     public long getCompleteActivityCount(long activityId) {
         return repository.findAllByActivityId(activityId).stream().count();
+    }
+
+    public void save(Tasklog task) {
+        repository.save(task);
     }
 }
